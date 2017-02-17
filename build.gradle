@@ -18,9 +18,8 @@ repositories {
 dependencies {
 	compile "etri:utils:1.0"
 	
-	compile "org.mvel:mvel2:2.3.1.Final"
-	compile "io.reactivex:rxjava:1.2.5"
-	compile "net.jcip:jcip-annotations:1.0"
+	compile "org.mvel:mvel2:${mvel2_version}"
+	compile "io.reactivex:rxjava:${rxjava_version}"
 	
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 	
