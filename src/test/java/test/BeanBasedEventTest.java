@@ -41,7 +41,7 @@ public class BeanBasedEventTest {
 
 			Assert.assertArrayEquals(new String[]{Runnable.class.getName()}, ev.getEventTypeIds());
 			Assert.assertEquals(Sets.newHashSet("one","message","class"),
-								Sets.newHashSet(ev.getPropertyNameAll()));
+								Sets.newHashSet(ev.getPropertyNames()));
 		}
 		catch ( IntrospectionException e ) {
 			

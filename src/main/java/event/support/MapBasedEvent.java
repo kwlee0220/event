@@ -12,22 +12,17 @@ import event.Event;
  * 
  * @author Kang-Woo Lee (ETRI)
  */
-public class MapBasedEvent implements Event {
-	private final String[] m_typeIds;
+public class MapBasedEvent extends AbstractEvent implements Event {
+	private final Set<Class<?>> m_types;
 	private final Map<String,Object> m_properties;
 	
-	private MapBasedEvent(String[] typeIds, Map<String,Object> props) {
-		m_typeIds = typeIds;
+	private MapBasedEvent(Set<Class<?>> types, Map<String,Object> props) {
+		m_types = types;
 		m_properties = Maps.newHashMap(props);
 	}
 
 	@Override
-	public String[] getEventTypeIds() {
-		return m_typeIds;
-	}
-
-	@Override
-	public String[] getPropertyNameAll() {
+	public String[] getPropertyNames() {
 		return m_properties.keySet().toArray(new String[0]);
 	}
 
@@ -36,16 +31,21 @@ public class MapBasedEvent implements Event {
 		return m_properties.get(name);
 	}
 
+	@Override
+	protected Set<Class<?>> getTypes() {
+		return m_types;
+	}
+
 	public static class Builder {
-		private final Set<String> m_typeIdSet = Sets.newHashSet();
+		private final Set<Class<?>> m_types = Sets.newHashSet();
 		private final Map<String,Object> m_properties = Maps.newHashMap();
 		
 		public MapBasedEvent build() {
-			return new MapBasedEvent(m_typeIdSet.toArray(new String[0]), m_properties);
+			return new MapBasedEvent(m_types, m_properties);
 		}
 		
 		public Builder addType(Class<?> intf) {
-			m_typeIdSet.add(intf.getName());
+			m_types.add(intf);
 			return this;
 		}
 		

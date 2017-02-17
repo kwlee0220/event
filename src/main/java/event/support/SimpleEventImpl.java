@@ -11,17 +11,18 @@ import event.Event;
  * 
  * @author Kang-Woo Lee
  */
-public class EventImpl implements Event {
+public class SimpleEventImpl implements Event {
 	private final String[] m_typeIds;
     private final String[] m_propNames;
     private final Object[] m_propValues;
     
-    public EventImpl(String[] typeIds, String[] propNames, Object[] propValues) {
+    public SimpleEventImpl(String[] typeIds, String[] propNames, Object[] propValues) {
     	m_typeIds = typeIds;
     	m_propNames = propNames;
     	m_propValues = propValues;
     }
 
+	@Override
 	public String[] getEventTypeIds() {
 		return m_typeIds;
 	}
@@ -40,7 +41,7 @@ public class EventImpl implements Event {
 		throw new IllegalArgumentException("Property not found: name=" + name);
     }
 
-	public String[] getPropertyNameAll() {
+	public String[] getPropertyNames() {
 		return m_propNames;
 	}
 	
@@ -53,7 +54,7 @@ public class EventImpl implements Event {
 			return false;
 		}
 		
-		EventImpl other = (EventImpl)obj;
+		SimpleEventImpl other = (SimpleEventImpl)obj;
 		
 		return Arrays.equals(m_typeIds, other.m_typeIds)
 				&& Arrays.equals(m_propNames, other.m_propNames)

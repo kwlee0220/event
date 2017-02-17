@@ -37,7 +37,7 @@ public class EventBuilder {
 	}
 
 	public Event build(ClassLoader loader) {
-		EventImpl impl = createEventImpl();
+		SimpleEventImpl impl = createEventImpl();
 		Class<?>[] types = new Class<?>[m_types.size()];
 		m_types.toArray(types);
 
@@ -45,7 +45,7 @@ public class EventBuilder {
 	}
 
 	public Event build() {
-		EventImpl impl = createEventImpl();
+		SimpleEventImpl impl = createEventImpl();
 		Class<?>[] types = new Class<?>[m_types.size()];
 		m_types.toArray(types);
 
@@ -78,7 +78,7 @@ public class EventBuilder {
 		return m_props.containsKey(name);
 	}
 
-	private EventImpl createEventImpl() {
+	private SimpleEventImpl createEventImpl() {
 		String[] typeIds = m_typeIdList.toArray(new String[m_typeIdList.size()]);
 
 		String[] propNames = new String[m_props.size()];
@@ -91,13 +91,13 @@ public class EventBuilder {
 			++i;
 		}
 
-		return new EventImpl(typeIds, propNames, propValues);
+		return new SimpleEventImpl(typeIds, propNames, propValues);
 	}
 
 	static class Handler implements InvocationHandler {
-		private final EventImpl m_impl;
+		private final SimpleEventImpl m_impl;
 
-		Handler(EventImpl impl) {
+		Handler(SimpleEventImpl impl) {
 			m_impl = impl;
 		}
 

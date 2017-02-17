@@ -2,6 +2,7 @@ package event.support;
 
 
 import java.beans.IntrospectionException;
+import java.util.Set;
 
 import com.google.common.base.Preconditions;
 
@@ -10,12 +11,12 @@ import utils.Bean;
 import utils.BeanPropertyNotFoundException;
 import utils.Utilities;
 
+
 /**
  * 
  * @author Kang-Woo Lee (ETRI)
  */
-public class BeanBasedEvent implements Event {
-	private final String[] m_typeIds;
+public class BeanBasedEvent extends AbstractEvent implements Event {
 	private final Bean m_bean;
 	
 	public static BeanBasedEvent from(Object obj) throws IntrospectionException {
@@ -23,20 +24,11 @@ public class BeanBasedEvent implements Event {
 	}
 	
 	private BeanBasedEvent(Object obj) throws IntrospectionException {
-		m_typeIds = Utilities.getInterfaceAllRecusively(obj.getClass())
-							.stream()
-							.map(Class::getName)
-							.toArray(sz -> new String[sz]);
 		m_bean = new Bean(obj);
 	}
 
 	@Override
-	public String[] getEventTypeIds() {
-		return m_typeIds;
-	}
-
-	@Override
-	public String[] getPropertyNameAll() {
+	public String[] getPropertyNames() {
 		return m_bean.getPropertyNames();
 	}
 
@@ -55,4 +47,8 @@ public class BeanBasedEvent implements Event {
 		}
 	}
 
+	@Override
+	protected Set<Class<?>> getTypes() {
+		return Utilities.getInterfaceAllRecusively(m_bean.getSourceObject().getClass());
+	}
 }
