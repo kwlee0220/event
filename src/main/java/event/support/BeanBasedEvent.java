@@ -1,14 +1,15 @@
 package event.support;
 
 
-import java.beans.IntrospectionException;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 import com.google.common.base.Preconditions;
 
 import event.Event;
-import utils.Bean;
-import utils.BeanPropertyNotFoundException;
 import utils.Utilities;
 
 
@@ -17,19 +18,22 @@ import utils.Utilities;
  * @author Kang-Woo Lee (ETRI)
  */
 public class BeanBasedEvent extends AbstractEvent implements Event {
-	private final Bean m_bean;
+	private final Object m_obj;
+	private final AtomicReference<Set<Class<?>>> m_types = new AtomicReference<>();
 	
-	public static BeanBasedEvent from(Object obj) throws IntrospectionException {
+	public static BeanBasedEvent from(Object obj) {
 		return new BeanBasedEvent(obj);
 	}
 	
-	private BeanBasedEvent(Object obj) throws IntrospectionException {
-		m_bean = new Bean(obj);
+	private BeanBasedEvent(Object obj) {
+		m_obj = obj;
 	}
 
 	@Override
 	public String[] getPropertyNames() {
-		return m_bean.getPropertyNames();
+		return Arrays.stream(PropertyUtils.getPropertyDescriptors(m_obj))
+						.map(desc -> desc.getName())
+						.toArray(sz -> new String[sz]);
 	}
 
 	@Override
@@ -37,18 +41,21 @@ public class BeanBasedEvent extends AbstractEvent implements Event {
 		Preconditions.checkNotNull(name, "Property name is null");
 		
 		try {
-			return m_bean.getProperty(name);
+			return PropertyUtils.getProperty(m_obj, name);
 		}
-		catch ( BeanPropertyNotFoundException e ) {
-			return null;
-		}
-		catch ( Exception e ) {
+		catch ( Throwable e ) {
 			return null;
 		}
 	}
 
 	@Override
 	protected Set<Class<?>> getTypes() {
-		return Utilities.getInterfaceAllRecusively(m_bean.getSourceObject().getClass());
+		Set<Class<?>> types = m_types.get();
+		if ( types == null ) {
+			types = Utilities.getInterfaceAllRecusively(m_obj.getClass());
+			m_types.compareAndSet(null, types);
+		}
+		
+		return types;
 	}
 }

@@ -1,7 +1,5 @@
 package test;
 
-import java.beans.IntrospectionException;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,33 +29,23 @@ public class BeanBasedEventTest {
 	
 	@Test
 	public void test01() {
-		try {
-			BeanClass obj = new BeanClass();
-			Event ev = BeanBasedEvent.from(obj);
-			
-			Assert.assertEquals(1, ev.getProperty("one"));
-			Assert.assertEquals("msg", ev.getProperty("message"));
-			Assert.assertEquals(null, ev.getProperty("two"));
+		BeanClass obj = new BeanClass();
+		Event ev = BeanBasedEvent.from(obj);
+		
+		Assert.assertEquals(1, ev.getProperty("one"));
+		Assert.assertEquals("msg", ev.getProperty("message"));
+		Assert.assertEquals(null, ev.getProperty("two"));
 
-			Assert.assertArrayEquals(new String[]{Runnable.class.getName()}, ev.getEventTypeIds());
-			Assert.assertEquals(Sets.newHashSet("one","message","class"),
-								Sets.newHashSet(ev.getPropertyNames()));
-		}
-		catch ( IntrospectionException e ) {
-			
-		}
+		Assert.assertArrayEquals(new String[]{Runnable.class.getName()}, ev.getEventTypeIds());
+		Assert.assertEquals(Sets.newHashSet("one","message","class"),
+							Sets.newHashSet(ev.getPropertyNames()));
 	}
 	
 	@Test(expected=NullPointerException.class)
 	public void test02() {
-		try {
-			BeanClass obj = new BeanClass();
-			Event ev = BeanBasedEvent.from(obj);
-			
-			ev.getProperty(null);
-		}
-		catch ( IntrospectionException e ) {
-			
-		}
+		BeanClass obj = new BeanClass();
+		Event ev = BeanBasedEvent.from(obj);
+		
+		ev.getProperty(null);
 	}
 }
