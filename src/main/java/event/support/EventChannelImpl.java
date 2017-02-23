@@ -47,6 +47,10 @@ public class EventChannelImpl extends EventPublisherImpl implements EventChannel
 		}
 	}
 	
+	private EventChannelImpl(AsyncConsumer<Event> eventPublisher) {
+		m_eventPublisher = eventPublisher;
+	}
+	
 	private EventChannelImpl(ExecutorService executor) {
 		m_eventPublisher = AsyncConsumer.from(m_publishEvent, executor);
 	}

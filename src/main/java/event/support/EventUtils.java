@@ -12,6 +12,28 @@ import rx.Subscriber;
  * @author Kang-Woo Lee (ETRI)
  */
 public class EventUtils {
+	private static final String[] EMPTY = new String[0];
+    public static final Event NULL = new Event() {
+		@Override
+		public String[] getEventTypeIds() {
+			return EMPTY;
+		}
+
+		@Override
+		public String[] getPropertyNames() {
+			return EMPTY;
+		}
+
+		@Override
+		public Object getProperty(String name) {
+			return EMPTY;
+		}
+    };
+    
+	public static final Event empty() {
+		return NULL;
+	}
+	
 	public static Observable<Event> createObservable(EventPublisher publisher) {
 		return Observable.using(()->new EventSubscription(publisher),
 								 sub -> Observable.create(rxSub -> sub.m_rxSubscriber = rxSub),

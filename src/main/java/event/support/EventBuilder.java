@@ -36,6 +36,16 @@ public class EventBuilder {
 		m_props = new HashMap<String,Object>();
 	}
 
+	public EventBuilder(Iterable<Class<?>> types) {
+		m_types = new ArrayList<Class<?>>();
+		for ( Class<?> type: types ) {
+			addEventType(type);
+		}
+		addEventType(Event.class);
+
+		m_props = new HashMap<String,Object>();
+	}
+
 	public Event build(ClassLoader loader) {
 		SimpleEventImpl impl = createEventImpl();
 		Class<?>[] types = new Class<?>[m_types.size()];
