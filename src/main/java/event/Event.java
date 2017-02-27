@@ -26,7 +26,23 @@ public interface Event {
 	public default boolean isInstanceOf(Class<?> intfc) {
 		Preconditions.checkNotNull(intfc, "intfc is null");
 		
-		return isInstanceOf(intfc.getName());
+		String intfcName = intfc.getName();
+		ClassLoader cloader = intfc.getClassLoader();
+		for ( String typeId: getEventTypeIds() ) {
+			try {
+				Class<?> type = cloader.loadClass(typeId);
+				if ( intfc.isAssignableFrom(type) ) {
+					return true;
+				}
+			}
+			catch ( ClassNotFoundException e ) {
+				if ( typeId.equals(intfcName) ) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
     
 	/**

@@ -1,6 +1,7 @@
 package event
 
 import com.google.common.base.Preconditions
+import com.google.common.collect.Sets
 
 import event.support.AbstractEvent
 
@@ -16,8 +17,13 @@ class GEvent extends AbstractEvent implements Event {
 		properties = props
 	}
 	
-	GEvent(Set<Class<?>> types, Map props) {
-		this.types = types
+	GEvent(Map props, Class<?>... types) {
+		this.types = Sets.newHashSet(types);
+		properties = props
+	}
+	
+	GEvent(Map props, Collection<Class<?>> types) {
+		this.types = Sets.newHashSet(types);
 		properties = props
 	}
 	
@@ -56,5 +62,19 @@ class GEvent extends AbstractEvent implements Event {
 	
 	def propertyMissing(String name, value) {
 		properties[name] = value
+	}
+	
+	@Override
+	public String toString() {
+		if ( types.size() == 1) {
+			"${types[0].name}$properties"
+		}
+		else if ( !types.isEmpty() ) {
+			def typeNames = types.each { it.name }
+			"$typeNames: $properties"
+		}
+		else {
+			"GEvent: $properties"
+		}
 	}
 }
