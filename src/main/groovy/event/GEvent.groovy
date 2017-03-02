@@ -27,6 +27,11 @@ class GEvent extends AbstractEvent implements Event {
 		properties = props
 	}
 	
+	@Override
+	protected Set<Class<?>> getTypes() {
+		return types
+	}
+	
 	def addType(Class<?> type) {
 		types.add(type)
 	}

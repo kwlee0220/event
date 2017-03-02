@@ -22,10 +22,6 @@ public class EventBuilder {
 	private final List<String> m_typeIdList = new ArrayList<String>();
 	private final Map<String,Object> m_props;
 
-	public static <T> T buildEvent(Class<T> type) {
-		return new EventBuilder(type).build(type);
-	}
-
 	public EventBuilder(Class<?>... types) {
 		m_types = new ArrayList<Class<?>>();
 		for ( int i =0; i < types.length; ++i ) {
@@ -77,6 +73,13 @@ public class EventBuilder {
 		m_types.add(type);
 		m_typeIdList.add(type.getName());
 
+		return this;
+	}
+	
+	public EventBuilder setProperties(Map<String,Object> properties) {
+		properties.entrySet()
+					.stream()
+					.forEach(ent -> setProperty(ent.getKey(), ent.getValue()));
 		return this;
 	}
 

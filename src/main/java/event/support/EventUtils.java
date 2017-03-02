@@ -1,6 +1,7 @@
 package event.support;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import event.Event;
@@ -35,6 +36,16 @@ public class EventUtils {
     
 	public static final Event empty() {
 		return NULL;
+	}
+
+	public static <T> T buildEvent(Class<T> type) {
+		return new EventBuilder(type).build(type);
+	}
+
+	public static <T> T buildEvent(Class<T> type, Map<String,Object> properties) {
+		return new EventBuilder(type)
+					.setProperties(properties)
+					.build(type);
 	}
 	
 	public static final String toString(Event event) {
