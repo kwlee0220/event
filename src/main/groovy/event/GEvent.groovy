@@ -33,7 +33,7 @@ class GEvent extends AbstractEvent implements Event {
 
 	@Override
 	public String[] getPropertyNames() {
-		return properties.values() as String[];
+		return properties.keySet() as String[];
 	}
 	
 	@Override

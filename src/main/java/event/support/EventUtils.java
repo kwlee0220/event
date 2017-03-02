@@ -1,5 +1,8 @@
 package event.support;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import event.Event;
 import event.EventPublisher;
 import event.EventSubscriber;
@@ -32,6 +35,19 @@ public class EventUtils {
     
 	public static final Event empty() {
 		return NULL;
+	}
+	
+	public static final String toString(Event event) {
+		String typeNames = Arrays.stream(event.getEventTypeIds())
+								.map(typeStr -> { 
+									int ridx = typeStr.lastIndexOf('.');
+									return ridx >= 0 ? typeStr.substring(ridx+1) : typeStr;
+								})
+								.collect(Collectors.joining(":"));
+		String propsStr = Arrays.stream(event.getPropertyNames())
+								.map(name -> name + ":" + event.getProperty(name))
+								.collect(Collectors.joining(","));
+		return typeNames + "[" + propsStr + "]";
 	}
 	
 	public static Observable<Event> createObservable(EventPublisher publisher) {
