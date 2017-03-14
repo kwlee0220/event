@@ -1,4 +1,4 @@
-rootProject.name = 'async'
+rootProject.name = 'event'
 
 ['utils'].each {
 	include ":$it"
