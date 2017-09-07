@@ -13,7 +13,7 @@ import com.google.common.collect.Maps;
 import event.Event;
 import event.EventPublisher;
 import event.EventSubscriber;
-import utils.ExceptionUtils;
+import utils.Throwables;
 
 /**
  * 
@@ -119,7 +119,7 @@ public class EventPublisherImpl implements EventPublisher {
 			return notifyIfMatched(desc, event);
 		}
 		catch ( Throwable e ) {
-			e = ExceptionUtils.unwrapThrowable(e);
+			e = Throwables.unwrapThrowable(e);
 			s_logger.info("failed in publishing event={} to subscriber={}, cause={}", event, desc, e);
 			
 			return false;
