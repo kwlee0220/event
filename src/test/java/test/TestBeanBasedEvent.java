@@ -12,7 +12,7 @@ import event.support.BeanBasedEvent;
  * 
  * @author Kang-Woo Lee (ETRI)
  */
-public class BeanBasedEventTest {
+public class TestBeanBasedEvent {
 	public static class BeanClass implements Runnable {
 		public int getOne() {
 			return 1;

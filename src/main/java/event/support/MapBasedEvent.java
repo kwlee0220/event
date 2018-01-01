@@ -35,6 +35,10 @@ public class MapBasedEvent extends AbstractEvent implements Event {
 	protected Set<Class<?>> getTypes() {
 		return m_types;
 	}
+	
+	public static Builder builder() {
+		return new Builder();
+	}
 
 	public static class Builder {
 		private final Set<Class<?>> m_types = Sets.newHashSet();
