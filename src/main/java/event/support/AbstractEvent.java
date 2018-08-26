@@ -1,9 +1,8 @@
 package event.support;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
-
-import com.google.common.base.Preconditions;
 
 import event.Event;
 
