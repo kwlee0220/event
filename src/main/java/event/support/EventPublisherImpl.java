@@ -36,22 +36,22 @@ public class EventPublisherImpl implements EventPublisher {
 
 	@Override
 	public final String subscribe(EventSubscriber subscriber) {
-		Preconditions.checkNotNull(subscriber);
+		Objects.requireNonNull(subscriber);
 		
 		return _subscribe(null, subscriber);
 	}
 
 	@Override
 	public final String subscribe(String filter, EventSubscriber subscriber) {
-		Preconditions.checkNotNull(filter, "event filter was null");
-		Preconditions.checkNotNull(subscriber, "subscriber was null");
+		Objects.requireNonNull(filter, "event filter was null");
+		Objects.requireNonNull(subscriber, "subscriber was null");
 		
 		return _subscribe(filter, subscriber);
 	}
 
 	@Override
 	public final boolean unsubscribe(String subscriberId) {
-		Preconditions.checkNotNull(subscriberId, "subscriberId was null");
+		Objects.requireNonNull(subscriberId, "subscriberId was null");
 
 		SubscriberDesc desc = m_subscribers.remove(subscriberId);
 		if ( desc != null ) {

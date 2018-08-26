@@ -23,7 +23,7 @@ public abstract class AbstractEvent implements Event {
 
 	@Override
 	public boolean isInstanceOf(Class<?> intfc) {
-		Preconditions.checkNotNull(intfc, "intfc is null");
+		Objects.requireNonNull(intfc, "intfc is null");
 		
 		return getTypes().stream()
 						.anyMatch(type -> intfc.isAssignableFrom(type));
@@ -31,7 +31,7 @@ public abstract class AbstractEvent implements Event {
 
 	@Override
 	public boolean isInstanceOf(String typeId) {
-		Preconditions.checkNotNull(typeId, "typeId is null");
+		Objects.requireNonNull(typeId, "typeId is null");
 		
 		return Arrays.stream(getEventTypeIds())
 					.anyMatch(tid -> tid.equals(typeId));

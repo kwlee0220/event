@@ -17,14 +17,14 @@ public interface Event {
 	public String[] getEventTypeIds();
 	
 	public default boolean isInstanceOf(final String typeId) {
-		Preconditions.checkNotNull(typeId, "typeId is null");
+		Objects.requireNonNull(typeId, "typeId is null");
 		
 		return Arrays.stream(getEventTypeIds())
 					.anyMatch(tid -> tid.equals(typeId));
 	}
 	
 	public default boolean isInstanceOf(Class<?> intfc) {
-		Preconditions.checkNotNull(intfc, "intfc is null");
+		Objects.requireNonNull(intfc, "intfc is null");
 		
 		String intfcName = intfc.getName();
 		ClassLoader cloader = intfc.getClassLoader();

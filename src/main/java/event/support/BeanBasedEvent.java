@@ -38,7 +38,7 @@ public class BeanBasedEvent extends AbstractEvent implements Event {
 
 	@Override
 	public Object getProperty(String name) {
-		Preconditions.checkNotNull(name, "Property name is null");
+		Objects.requireNonNull(name, "Property name is null");
 		
 		try {
 			return PropertyUtils.getProperty(m_obj, name);
