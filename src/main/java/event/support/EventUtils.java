@@ -4,12 +4,14 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.reactivestreams.Subscriber;
+
 import event.Event;
 import event.EventPublisher;
 import event.EventSubscriber;
+import event.support.EventUtils.EventSubscription;
+import io.reactivex.Observable;
 import net.jcip.annotations.GuardedBy;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * 
@@ -61,17 +63,17 @@ public class EventUtils {
 		return typeNames + "[" + propsStr + "]";
 	}
 	
-	public static Observable<Event> createObservable(EventPublisher publisher) {
-		return Observable.using(()->new EventSubscription(publisher),
-								 sub -> Observable.create(rxSub -> sub.m_rxSubscriber = rxSub),
-								 EventSubscription::release);
-	}
-	
-	public static Observable<Event> createObservable(EventPublisher publisher, String filter) {
-		return Observable.using(()->new EventSubscription(publisher, filter),
-								 sub -> Observable.create(rxSub -> sub.setRxSubscriber(rxSub)),
-								 EventSubscription::release);
-	}
+//	public static Observable<Event> createObservable(EventPublisher publisher) {
+//		return Observable.using(()->new EventSubscription(publisher),
+//								 sub -> Observable.create(rxSub -> sub.m_rxSubscriber = rxSub),
+//								 EventSubscription::release);
+//	}
+//	
+//	public static Observable<Event> createObservable(EventPublisher publisher, String filter) {
+//		return Observable.using(()->new EventSubscription(publisher, filter),
+//								 sub -> Observable.create(rxSub -> sub.setRxSubscriber(rxSub)),
+//								 EventSubscription::release);
+//	}
 	
 	static class EventSubscription implements EventSubscriber {
 		private final EventPublisher m_publisher;
