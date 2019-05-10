@@ -1,7 +1,8 @@
 package event;
 
 import java.util.Arrays;
-import java.util.Objects;
+
+import utils.Utilities;
 
 /**
  * 
@@ -16,14 +17,14 @@ public interface Event {
 	public String[] getEventTypeIds();
 	
 	public default boolean isInstanceOf(final String typeId) {
-		Objects.requireNonNull(typeId, "typeId is null");
+		Utilities.checkNotNullArgument(typeId, "typeId is null");
 		
 		return Arrays.stream(getEventTypeIds())
 					.anyMatch(tid -> tid.equals(typeId));
 	}
 	
 	public default boolean isInstanceOf(Class<?> intfc) {
-		Objects.requireNonNull(intfc, "intfc is null");
+		Utilities.checkNotNullArgument(intfc, "intfc is null");
 		
 		String intfcName = intfc.getName();
 		ClassLoader cloader = intfc.getClassLoader();

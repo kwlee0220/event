@@ -2,7 +2,6 @@ package event.support;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 
 import org.mvel2.MVEL;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import event.Event;
 import event.EventPublisher;
 import event.EventSubscriber;
 import utils.Throwables;
+import utils.Utilities;
 
 /**
  * 
@@ -36,22 +36,22 @@ public class EventPublisherImpl implements EventPublisher {
 
 	@Override
 	public final String subscribe(EventSubscriber subscriber) {
-		Objects.requireNonNull(subscriber);
+		Utilities.checkNotNullArgument(subscriber, "subscriber is null");
 		
 		return _subscribe(null, subscriber);
 	}
 
 	@Override
 	public final String subscribe(String filter, EventSubscriber subscriber) {
-		Objects.requireNonNull(filter, "event filter was null");
-		Objects.requireNonNull(subscriber, "subscriber was null");
+		Utilities.checkNotNullArgument(filter, "event filter was null");
+		Utilities.checkNotNullArgument(subscriber, "subscriber was null");
 		
 		return _subscribe(filter, subscriber);
 	}
 
 	@Override
 	public final boolean unsubscribe(String subscriberId) {
-		Objects.requireNonNull(subscriberId, "subscriberId was null");
+		Utilities.checkNotNullArgument(subscriberId, "subscriberId was null");
 
 		SubscriberDesc desc = m_subscribers.remove(subscriberId);
 		if ( desc != null ) {

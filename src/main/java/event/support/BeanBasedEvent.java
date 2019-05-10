@@ -2,7 +2,6 @@ package event.support;
 
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -37,7 +36,7 @@ public class BeanBasedEvent extends AbstractEvent implements Event {
 
 	@Override
 	public Object getProperty(String name) {
-		Objects.requireNonNull(name, "Property name is null");
+		Utilities.checkNotNullArgument(name, "Property name is null");
 		
 		try {
 			return PropertyUtils.getProperty(m_obj, name);
