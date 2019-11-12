@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.concurrent.GuardedBy;
+
 import org.reactivestreams.Subscriber;
 
 import event.Event;
 import event.EventPublisher;
 import event.EventSubscriber;
-import event.support.EventUtils.EventSubscription;
-import io.reactivex.Observable;
-import net.jcip.annotations.GuardedBy;
 
 /**
  * 
