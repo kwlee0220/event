@@ -11,13 +11,12 @@ repositories {
 	mavenCentral()
 }
 
-ext.mvel2_version = '2.4.0.Final'
-ext.groovy_version = '2.4.12'
+ext.groovy_version = '2.5.7'
 ext.commons_beanutils_version = '1.9.3'
+
 dependencies {
 	compile project(":utils")
 	
-	compile "org.mvel:mvel2:${mvel2_version}"
 	compile "org.codehaus.groovy:groovy:${groovy_version}"
 	compile "commons-beanutils:commons-beanutils:${commons_beanutils_version}"
 	
