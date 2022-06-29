@@ -11,11 +11,14 @@ repositories {
 	mavenCentral()
 }
 
-ext.groovy_version = '2.5.7'
-ext.commons_beanutils_version = '1.9.3'
+ext {
+	groovy_version = '2.5.7'
+	commons_beanutils_version = '1.9.3'
+}
 
 dependencies {
 	compile project(":utils")
+	compile project(":utilsx")
 	
 	compile "org.codehaus.groovy:groovy:${groovy_version}"
 	compile "commons-beanutils:commons-beanutils:${commons_beanutils_version}"
@@ -63,7 +66,12 @@ eclipse {
 				}
 				cp.entries.each { entry ->
 					if ( entry.kind == 'src' && entry.hasProperty('output') ) {
-						entry.output = 'classes'
+						if ( entry.path.startsWith("src/test/") ) {
+							entry.output = 'test_classes'
+						}
+						else {
+							entry.output = 'classes'
+						}
 					}
 				}
 			}
