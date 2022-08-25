@@ -1,5 +1,4 @@
-apply plugin: 'groovy'
-apply plugin: 'maven'
+apply plugin: 'java-library'
 
 group = 'etri'
 version = '1.0'
@@ -12,16 +11,21 @@ repositories {
 }
 
 ext {
-	groovy_version = '2.5.7'
 	commons_beanutils_version = '1.9.3'
+	mvel2_version = '2.4.14.Final'
+	rxjava2_version = '2.2.21'
+	
+	groovy_version = '2.5.7'
 }
 
 dependencies {
-	compile project(":utils")
-	compile project(":utilsx")
+	implementation project(":utils")
 	
-	compile "org.codehaus.groovy:groovy:${groovy_version}"
-	compile "commons-beanutils:commons-beanutils:${commons_beanutils_version}"
+	implementation "org.codehaus.groovy:groovy:${groovy_version}"
+	
+	implementation "org.mvel:mvel2:${mvel2_version}"
+	implementation "io.reactivex.rxjava2:rxjava:${rxjava2_version}"
+	implementation "commons-beanutils:commons-beanutils:${commons_beanutils_version}"
 	
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 }
